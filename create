@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+"""creates a file, makes it executable and open it with vim"""
+
+import subprocess
+import sys
+
+
+def create_file():
+    """creates the file"""
+    subprocess.call(['touch', sys.argv[1]])
+    subprocess.call(['chmod', 'u+x', sys.argv[1]])
+
+    with open(sys.argv[1], 'w') as file:
+        shebang = file.write("#!/usr/bin/python3")
+
+    subprocess.call(['nvim', sys.argv[1]])
+
+
+create_file()
