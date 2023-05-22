@@ -2,71 +2,73 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$HOME/.local/bin:$PATH
-export PATH=$HOME/usr/bin:$PATH
-export PATH=$HOME/.local/lib/python3.10/site-packages:$PATH
-source $(dirname $(gem which colorls))/tab_complete.sh
-export PATH=$PATH:$(ruby -e 'puts Gem.bindir')
-export PATH=$PATH/local/lib:$PATH
-
-
-# Path to your oh-my-zsh installation.
+export PATH=$HOME/usr/lib:$PATH
+export PATH=$HOME/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
+export PYTHONPATH=$PYTHONPATH:/usr/bin/zenmap
+# Go variables and path
+export GOPATH=/root/go-workspace
+export GOROOT=/usr/local/go
+PATH=$PATH:$GOROOT/bin/:$GOPATH/bin
+export GOROOT=/usr/local/go
+export GOPATH=$PATH:/usr/local/go/bin
+DISABLE_LS_COLORS="true"
+DISABLE_LS_COLORS="true"
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
-POWERLEVEL10K_MODE="nerdfont-complete"
-POWERLEVEL10K_LEFT_PROMPT_ELEMENTS=(os_icon dir newline vcs)
+ZSH_THEME="robbyrussell"
 
-plugins=(
-    git
-    pyenv
-    pylint
-    python
-	postgres
-)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-
-# Aiases
-
-alias zshconfig="mate ~/.zshrc"
+# alias zshconfig="mate ~/.zshrc"
+alias full-upgrade="sudo apt-get full-upgrade | grep -P "\d\K" "
 alias ohmyzsh="mate ~/.oh-my-zsh"
+alias uu="sudo apt-get update -y | grep -P "\d\K "&& sudo apt-get upgrade -y | grep -P "\d\K" "
+alias autoremove="sudo apt-get -y autoremove | grep -P "\d\K" "
+alias install="sudo apt-get -y install"
+alias uninstall="sudo apt-get -y remove"
+alias search="apt-get search"
 alias vim="nvim"
+alias ls="lsd"
+alias tree="lsd --tree"
 alias py="python3"
-alias add-key="eval \`ssh-agent -s\` && ssh-add ~/.ssh/alango"
+alias add-key="eval \`ssh-agent -s\` && ssh-add ~/.ssh/key"
 alias start-database="sudo -u postgres psql"
-alias valentina="cd /home/alango/Downloads/valentina-studio/pkg/valentina-studio/opt/VStudio && ./vstudio"
-alias pip="pip3"
+# alias pip="pip3"
 alias python="python3"
 alias cm="chmod +x "
 alias py-shebang="echo '#!/usr/bin/python3' | tee "
 alias go-shebang="echo '//usr/bin/true; exec /usr/bin/env go run "'$0'" "'$@'"' | tee "
 alias ls="lsd"
-alias lls="colorls"
-alias lab="jupyter lab"
-alias notebook="jupyter notebook"
-alias notebook-themes="jt -l"
-alias list-unused-packages="sudo pacman -Qtdq"
-alias remove-unused-packages="sudo pacman -R $(pacman -Qtdq)"
-alias uu="sudo pacman -Syyu"
-alias admin="sudo"
-alias copy-go="cat ~/bin/go-template >"
+alias generate-key="mkdir ~/.ssh && cd ~/.ssh && ssh-keygen -t ed25519 -C 'mr.alangobryan@gmail.com'"
+alias start-mysql="sudo mkdir /var/run/mysqld/ && sudo service mysql start"
+alias start-mysql-root="sudo mkdir /var/run/mysqld/ && sudo service mysql start && mysql -u root -p"
+alias run="mysql -u root -p"
+alias pbcopy="xclip -selection clipboard"
+alias pbpaste="xclip -selection clipboard -o"
+alias psql-exec="psql swan -d swan -f"
+alias go-to="psql -h localhost -p 5432 -U"
+alias back="cd .."
+alias prev="cd -"
+alias remove="sudo apt-get -y remove | grep -P "\d\K" "
+alias pull="git pull --ff-only"
+alias push="git push"
+alias commit="git commit -m"
+alias update="sudo apt-get update -y | grep -P "\d\K" "
+alias upgrade="sudo apt-get upgrade -y | grep -P "\d\K" "
+alias docker-exec="sudo docker exec -it"
+alias zenmap="zenmap-kbx"
+
+alias clean-dpkg="sudo apt -y remove $(cat ~/bin/stale-packages/packages)"
 
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+source ~/powerlevel10k/powerlevel10k.zsh-theme
 
-if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-        source /etc/profile.d/vte.sh
-fi
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-
-
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+LS_COLORS=$LS_COLORS:'ow=1;34:' ; export LS_COLORS
